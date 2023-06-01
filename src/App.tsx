@@ -72,10 +72,6 @@ function App() {
     }
   };
 
-  if (Object.values(toDos)) {
-    console.log(Object.values(toDos));
-  }
-
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Wrapper>

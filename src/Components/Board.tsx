@@ -111,7 +111,8 @@ function Board({ toDos, boardId }: IBoardProps) {
                 key={toDo.id}
                 index={index}
                 toDoId={toDo.id}
-                toDoText={toDo.text}></DraggableCard>
+                toDoText={toDo.text}
+                boardId={boardId}></DraggableCard>
             ))}
             {magic.placeholder}
           </Area>
