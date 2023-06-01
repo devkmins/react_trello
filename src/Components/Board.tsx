@@ -76,11 +76,16 @@ function Board({ toDos, boardId }: IBoardProps) {
     };
 
     setToDos((allBoards) => {
-      return {
+      const newToDos = {
         ...allBoards,
         [boardId]: [...allBoards[boardId], newToDo],
       };
+
+      localStorage.setItem("toDos", JSON.stringify(newToDos));
+
+      return newToDos;
     });
+
     setValue("toDo", "");
   };
 

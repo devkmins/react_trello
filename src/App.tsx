@@ -38,10 +38,14 @@ function App() {
         boardCopy.splice(source.index, 1);
         boardCopy.splice(destination?.index, 0, taskObj);
 
-        return {
+        const newBoards = {
           ...allBoards,
           [source.droppableId]: boardCopy,
         };
+
+        localStorage.setItem("toDos", JSON.stringify(newBoards));
+
+        return newBoards;
       });
     }
 
@@ -55,14 +59,22 @@ function App() {
         sourceBoard.splice(source.index, 1);
         destinationBoard.splice(destination.index, 0, taskObj);
 
-        return {
+        const newBoards = {
           ...allBoards,
           [source.droppableId]: sourceBoard,
           [destination.droppableId]: destinationBoard,
         };
+
+        localStorage.setItem("toDos", JSON.stringify(newBoards));
+
+        return newBoards;
       });
     }
   };
+
+  if (Object.values(toDos)) {
+    console.log(Object.values(toDos));
+  }
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
