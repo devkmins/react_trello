@@ -34,10 +34,20 @@ const Area = styled.div<IAreaProps>`
 `;
 
 const Form = styled.form`
+  display: flex;
+  justify-content: center;
   width: 100%;
+  height: 30px;
+`;
 
-  input {
-    width: 100%;
+const Input = styled.input`
+  width: 90%;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.5);
+
+  &:focus {
+    outline: 1.5px solid rgba(64, 140, 242, 1);
   }
 `;
 
@@ -78,7 +88,7 @@ function Board({ toDos, boardId }: IBoardProps) {
     <Wrapper>
       <Title>{boardId}</Title>
       <Form onSubmit={handleSubmit(onValid)}>
-        <input
+        <Input
           {...register("toDo", { required: true })}
           type="text"
           placeholder={`Add task on ${boardId}`}
