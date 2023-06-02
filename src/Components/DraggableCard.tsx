@@ -1,6 +1,6 @@
-import React, { MouseEventHandler, ReactElement } from "react";
-import { Draggable, Droppable } from "react-beautiful-dnd";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import React from "react";
+import { Draggable } from "react-beautiful-dnd";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { toDoState } from "../atoms";
 

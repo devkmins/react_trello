@@ -38,6 +38,7 @@ const Form = styled.form`
   justify-content: center;
   width: 100%;
   height: 30px;
+  margin-bottom: 15px;
 `;
 
 const Input = styled.input`

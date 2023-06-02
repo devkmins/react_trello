@@ -19,3 +19,8 @@ export const toDoState = atom<IToDoState>({
         Done: [],
       },
 });
+
+export const trash = atom({
+  key: "trash",
+  default: false,
+});
