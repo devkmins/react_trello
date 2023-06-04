@@ -4,6 +4,7 @@ import DraggableCard from "./DraggableCard";
 import { useForm } from "react-hook-form";
 import { ITodo, toDoState } from "../atoms";
 import { useSetRecoilState } from "recoil";
+import RemoveBoard from "./RemoveBoard";
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,6 +14,13 @@ const Wrapper = styled.div`
   border-radius: 10px;
   min-height: 200px;
   margin-bottom: 25px;
+`;
+
+const Header = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px 10px;
 `;
 
 const Title = styled.h2`
@@ -93,7 +101,10 @@ function Board({ toDos, boardId }: IBoardProps) {
 
   return (
     <Wrapper>
-      <Title>{boardId}</Title>
+      <Header>
+        <Title>{boardId}</Title>
+        <RemoveBoard boardId={boardId} />
+      </Header>
       <Form onSubmit={handleSubmit(onValid)}>
         <Input
           {...register("toDo", { required: true })}

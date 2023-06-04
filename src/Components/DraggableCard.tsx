@@ -47,7 +47,7 @@ function DraggableCard({
 }: IDraggableCardProps) {
   const setToDos = useSetRecoilState(toDoState);
 
-  const onRemove = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const onRemove = () => {
     setToDos((prevData) => {
       const copyData = { ...prevData };
       const filterData = copyData[boardId].filter((elem) => elem.id !== toDoId);
