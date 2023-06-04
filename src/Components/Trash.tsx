@@ -1,8 +1,7 @@
-import { useRef } from "react";
 import { Droppable } from "react-beautiful-dnd";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { trash } from "../atoms";
+import { trashState } from "../atoms";
 
 interface TrashProps {
   visible: boolean;
@@ -19,14 +18,14 @@ const TrashDiv = styled.div<TrashProps>`
   display: ${(props) => (props.visible ? "flex" : "none")};
   justify-content: center;
   align-items: center;
-  width: 75px;
-  height: 75px;
+  width: 65px;
+  height: 65px;
   border: 1px solid white;
   border-radius: 10px;
 `;
 
 function Trash() {
-  const visible = useRecoilValue(trash);
+  const visible = useRecoilValue(trashState);
 
   return (
     <Droppable droppableId="remove">
@@ -34,8 +33,8 @@ function Trash() {
         <Container>
           <TrashDiv visible={visible} {...magic.droppableProps}>
             <img
-              width="60"
-              height="60"
+              width="50"
+              height="50"
               src="https://img.icons8.com/sf-ultralight/50/000000/trash.png"
               alt="trash"
               ref={magic.innerRef}

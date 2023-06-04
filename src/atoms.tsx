@@ -20,7 +20,12 @@ export const toDoState = atom<IToDoState>({
       },
 });
 
-export const trash = atom({
+export const boardState = atom({
+  key: "board",
+  default: [],
+});
+
+export const trashState = atom({
   key: "trash",
   default: false,
 });

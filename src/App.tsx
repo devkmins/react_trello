@@ -1,23 +1,23 @@
-import {
-  DragDropContext,
-  DragStart,
-  Draggable,
-  DropResult,
-  Droppable,
-} from "react-beautiful-dnd";
+import { DragDropContext, DragStart, DropResult } from "react-beautiful-dnd";
 import styled from "styled-components";
-import { toDoState, trash } from "./atoms";
+import { toDoState, trashState } from "./atoms";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import Board from "./Components/Board";
 import Trash from "./Components/Trash";
+import CreateBoard from "./Components/CreateBoard";
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+`;
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: center;
   align-items: flex-end;
-  max-width: 680px;
   width: 100%;
-  height: 60vh;
+  max-width: 680px;
   margin: 0 auto;
 `;
 
@@ -30,14 +30,14 @@ const Boards = styled.div`
 
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
-  const setVisible = useSetRecoilState(trash);
+  const setVisible = useSetRecoilState(trashState);
 
   const onDragStart = (info: DragStart) => {
     setVisible(true);
   };
 
   const onDragEnd = (info: DropResult) => {
-    const { destination, draggableId, source } = info;
+    const { destination, source } = info;
 
     if (!destination) return;
 
@@ -103,13 +103,16 @@ function App() {
 
   return (
     <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
-      <Wrapper>
-        <Boards>
-          {Object.keys(toDos).map((boardId) => (
-            <Board boardId={boardId} key={boardId} toDos={toDos[boardId]} />
-          ))}
-        </Boards>
-      </Wrapper>
+      <Container>
+        <CreateBoard />
+        <Wrapper>
+          <Boards>
+            {Object.keys(toDos).map((boardId) => (
+              <Board boardId={boardId} key={boardId} toDos={toDos[boardId]} />
+            ))}
+          </Boards>
+        </Wrapper>
+      </Container>
       <Trash />
     </DragDropContext>
   );

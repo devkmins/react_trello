@@ -12,6 +12,7 @@ const Wrapper = styled.div`
   padding-top: 10px;
   border-radius: 10px;
   min-height: 200px;
+  margin-bottom: 25px;
 `;
 
 const Title = styled.h2`
