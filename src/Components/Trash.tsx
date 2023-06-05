@@ -18,14 +18,23 @@ const TrashDiv = styled.div<TrashProps>`
   display: ${(props) => (props.visible ? "flex" : "none")};
   justify-content: center;
   align-items: center;
-  width: 65px;
-  height: 65px;
-  border: 1px solid white;
+  width: 75px;
+  height: 75px;
   border-radius: 10px;
+
+  &:hover {
+    border: 1px solid white;
+  }
+
+  img {
+    width: 60px;
+    height: 60px;
+  }
 `;
 
 function Trash() {
   const visible = useRecoilValue(trashState);
+  console.log(visible);
 
   return (
     <Droppable droppableId="remove">
@@ -33,8 +42,6 @@ function Trash() {
         <Container>
           <TrashDiv visible={visible} {...magic.droppableProps}>
             <img
-              width="50"
-              height="50"
               src="https://img.icons8.com/sf-ultralight/50/000000/trash.png"
               alt="trash"
               ref={magic.innerRef}

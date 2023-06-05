@@ -11,6 +11,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 100%;
+  height: 100%;
 `;
 
 const Wrapper = styled.div`
@@ -112,8 +113,8 @@ function App() {
             ))}
           </Boards>
         </Wrapper>
+        <Trash />
       </Container>
-      <Trash />
     </DragDropContext>
   );
 }
