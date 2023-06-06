@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { ITodo, toDoState } from "../atoms";
 import { useSetRecoilState } from "recoil";
 import RemoveBoard from "./RemoveBoard";
+import { useState } from "react";
 
 const Wrapper = styled.div`
   display: flex;
@@ -17,14 +18,13 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.header`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 3fr repeat(2, 0.25fr);
   align-items: center;
   margin: 0px 10px;
 `;
 
 const Title = styled.h2`
-  text-align: center;
   font-weight: 600;
   margin-bottom: 10px;
   font-size: 18px;
@@ -61,6 +61,37 @@ const Input = styled.input`
   }
 `;
 
+const ModifyBtn = styled.button`
+  margin-bottom: 10px;
+  margin-right: 5px;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+
+  img {
+    width: 15px;
+    height: 15px;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const BoardForm = styled.form`
+  width: 180px;
+`;
+
+const BoardInput = styled.input`
+  border: none;
+  font-size: 17px;
+  padding: 0;
+  outline: none;
+  border-bottom: 1px solid #3e8cf2;
+  background-color: transparent;
+  margin-bottom: 10px;
+`;
+
 interface IBoardProps {
   toDos: ITodo[];
   boardId: string;
@@ -71,15 +102,29 @@ interface IAreaProps {
   isDraggingOver: boolean;
 }
 
-interface IForm {
+interface IFormToDo {
   toDo: string;
 }
 
-function Board({ toDos, boardId }: IBoardProps) {
-  const setToDos = useSetRecoilState(toDoState);
-  const { register, setValue, handleSubmit } = useForm<IForm>();
+interface IFormBoard {
+  boardName: string;
+}
 
-  const onValid = ({ toDo }: IForm) => {
+function Board({ toDos, boardId }: IBoardProps) {
+  const [modify, setModify] = useState(false);
+  const setToDos = useSetRecoilState(toDoState);
+  const {
+    register: registerToDo,
+    setValue: setValueToDo,
+    handleSubmit: handleSubmitToDo,
+  } = useForm<IFormToDo>();
+  const {
+    register: registerBoard,
+    setValue: setValueBoard,
+    handleSubmit: handleSubmitBoard,
+  } = useForm<IFormBoard>();
+
+  const onValid = ({ toDo }: IFormToDo) => {
     const newToDo = {
       id: Date.now(),
       text: toDo,
@@ -96,18 +141,56 @@ function Board({ toDos, boardId }: IBoardProps) {
       return newToDos;
     });
 
-    setValue("toDo", "");
+    setValueToDo("toDo", "");
+  };
+
+  const onBoardValid = ({ boardName }: IFormBoard) => {
+    setToDos((prevBoards) => {
+      const copyBoards = { ...prevBoards };
+      const copyBoard = copyBoards[boardId];
+      delete copyBoards[boardId];
+
+      const updateBoards = {
+        ...copyBoards,
+        [boardName]: copyBoard,
+      };
+
+      localStorage.setItem("toDos", JSON.stringify(updateBoards));
+
+      return updateBoards;
+    });
+
+    setModify(false);
+  };
+
+  const onModify = () => {
+    setModify(true);
+    setValueBoard("boardName", boardId);
   };
 
   return (
     <Wrapper>
       <Header>
-        <Title>{boardId}</Title>
+        <Title>{modify ? "" : boardId}</Title>
+        {modify ? (
+          <BoardForm onSubmit={handleSubmitBoard(onBoardValid)}>
+            <BoardInput
+              {...registerBoard("boardName", { required: true })}
+              type="text"></BoardInput>
+          </BoardForm>
+        ) : (
+          <ModifyBtn onClick={onModify}>
+            <img
+              src="https://img.icons8.com/fluency-systems-regular/48/000000/pencil--v1.png"
+              alt="pencil--v1"
+            />
+          </ModifyBtn>
+        )}
         <RemoveBoard boardId={boardId} />
       </Header>
-      <Form onSubmit={handleSubmit(onValid)}>
+      <Form onSubmit={handleSubmitToDo(onValid)}>
         <Input
-          {...register("toDo", { required: true })}
+          {...registerToDo("toDo", { required: true })}
           type="text"
           placeholder={`Add task on ${boardId}`}
         />
