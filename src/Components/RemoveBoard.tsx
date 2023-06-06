@@ -12,6 +12,10 @@ const RemoveBtn = styled.button`
     width: 17px;
     height: 17px;
   }
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 interface IRemoveBoardProps {
@@ -39,8 +43,8 @@ function RemoveBoard({ boardId }: IRemoveBoardProps) {
   return (
     <RemoveBtn onClick={onRemove}>
       <img
-        src="https://img.icons8.com/material-outlined/24/filled-trash.png"
-        alt="filled-trash"
+        src="https://img.icons8.com/material-outlined/24/000000/trash--v1.png"
+        alt="trash--v1"
       />
     </RemoveBtn>
   );

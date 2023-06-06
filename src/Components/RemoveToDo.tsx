@@ -11,14 +11,18 @@ const RemoveBtn = styled.button`
     width: 15px;
     height: 15px;
   }
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
-interface IRemoveToDo {
+interface IRemoveToDoProps {
   toDoId: number;
   boardId: string;
 }
 
-function RemoveToDo({ toDoId, boardId }: IRemoveToDo) {
+function RemoveToDo({ toDoId, boardId }: IRemoveToDoProps) {
   const setToDos = useSetRecoilState(toDoState);
 
   const onRemove = () => {
@@ -39,8 +43,8 @@ function RemoveToDo({ toDoId, boardId }: IRemoveToDo) {
   return (
     <RemoveBtn onClick={onRemove}>
       <img
-        src="https://img.icons8.com/material-outlined/24/filled-trash.png"
-        alt="filled-trash"
+        src="https://img.icons8.com/material-outlined/24/000000/trash--v1.png"
+        alt="trash--v1"
       />
     </RemoveBtn>
   );

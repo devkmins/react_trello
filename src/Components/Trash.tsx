@@ -21,9 +21,10 @@ const TrashDiv = styled.div<TrashProps>`
   width: 75px;
   height: 75px;
   border-radius: 10px;
+  background-color: #dadfe9;
 
   &:hover {
-    border: 1px solid white;
+    background-color: #ff7675;
   }
 
   img {
@@ -34,7 +35,6 @@ const TrashDiv = styled.div<TrashProps>`
 
 function Trash() {
   const visible = useRecoilValue(trashState);
-  console.log(visible);
 
   return (
     <Droppable droppableId="remove">
